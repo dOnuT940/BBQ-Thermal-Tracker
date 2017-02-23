@@ -1,0 +1,91 @@
+body {
+     margin: 0px;
+     padding: 0px;
+     width: 100%;
+     background-color: #34495E; /*BACKGROUND COLOR*/
+}
+
+.header {
+     width: 100%;
+     font-family: Single;
+     font-size: 120px;
+     text-align: center;
+     color: #8ca6c0;                          /*TITLE-COLOR*/
+     text-decoration: none;
+}
+
+@font-face {
+     font-family: Single;
+     src: url(fonts/sing_14l.ttf);
+}
+
+@font-face {
+     font-family: ComicSerif;
+     src: url(fonts/HVD_Comic_Serif_Pro.otf);
+}
+
+.list {
+     list-style-type: none;
+     text-align: center;
+     font-size: 60px;
+}
+
+.lblval {
+     display: inline-block;
+     padding: 35px;
+     border-radius: 10px;
+     font-family: ComicSerif;
+     background-color: #293a4b;
+     border: 6px solid #202E3C;
+}
+
+#mainlabels {
+     font-family: ComicSerif;
+     color: #5382C8;
+}
+
+#power-value {
+     width: 40px;
+     height: 40px;
+     -webkit-border-radius: 25px;
+     -moz-border-radius: 25px;
+     border-radius: 30px;
+}
+
+#temp-value, #target-value {
+     color: #4B77BE;
+}
+
+#refresh-value {
+     color: #1BA957;
+}
+
+#footer {
+     width: 100%;
+     background-color: #202E3C;
+     height: 8%;
+     bottom: 0px;
+     position: absolute;
+}
+
+#ulfoot {
+     list-style-type: none;
+     font-family: Single;
+}
+
+#titlefooter {
+     color: #8ca6c0;
+     font-size: 18px;
+     text-decoration: underline;
+}
+
+#footerlinkproject, #footerlinksources {
+     font-size: 14px;
+     color: #4B77BE;
+     text-decoration: none;
+}
+
+a:hover, a:visited, a:active {
+     cursor: pointer;
+     color: inherit;
+}
