@@ -89,3 +89,7 @@ a:hover, a:visited, a:active {
      cursor: pointer;
      color: inherit;
 }
+
+#error-output {
+     
+}

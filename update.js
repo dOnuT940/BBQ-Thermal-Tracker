@@ -1,14 +1,14 @@
 $(document).ready(function() {
-     loadJSON();
+     loadJSONFile();
 });
 
 
-function loadJSON() {
+function loadJSONFile() {
      $.getJSON("arduino.js", function(data, status) {
-          if (status !== 404) {
-               //console.log(data); TROUBLESHOOTING
-
-               // SET CONDITIONS
+          if (status === "success" && data) {
+               var errorElem = document.getElementById('error-output');
+               console.log("arduino.js load: " + status);
+               errorElem.innerHTML = "success";
                //FAN
                if (data.fan === true) {
                     changeVal("fan", true);
@@ -31,6 +31,9 @@ function loadJSON() {
                else {
                     changeVal("power", false);
                }
+          }
+          else {
+               errorElem.innerHTML = "Error loading external JSON: " + status;
           }
      });
 }

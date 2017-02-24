@@ -8,6 +8,8 @@ var targetTemp; //Target temperature
 
 var countdown = 10; //Seconds before refresh
 var i = 1; //Fan Rotate Counter
+var date = new Date();
+console.log(date);
 
 function setup() {
      noCanvas(); //REMOVE CANVAS DOM ELEMENT
