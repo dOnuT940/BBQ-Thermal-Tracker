@@ -8,12 +8,14 @@ var targetTemp; //Target temperature
 
 var countdown = 10; //Seconds before refresh
 var i = 1; //Fan Rotate Counter
-var date = new Date();
-console.log(date);
+var timeStampLoad = new Date(); //Time Stamp of Page Load
+
+console.log(timeStampLoad);
 
 function setup() {
      noCanvas(); //REMOVE CANVAS DOM ELEMENT
      showCountdown(); //START REFRESH COUNTDOWN
+
 }
 
 function draw() {
@@ -44,7 +46,7 @@ function rotateFan() { //SPIN FAN ANIMATION IN HTML
      }
      else if (i >= 19) {
           i = 1;
-          return false;
+          return true;
      }
      i++;
 }
@@ -106,4 +108,10 @@ function changeVal(t, v) {
 
 function returnHome() {
      window.location.reload(true);
+}
+
+function setTimeStamp(elemId) {
+     //SETS TIMESTAMP OFF PAGE LOAD
+     var elem = document.getElementById(elemId);
+     elem.innerHTML = timeStampLoad.toDateString();
 }

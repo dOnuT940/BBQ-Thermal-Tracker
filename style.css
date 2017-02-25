@@ -91,5 +91,11 @@ a:hover, a:visited, a:active {
 }
 
 #error-output {
-     
+
+}
+
+#timestamp {
+     position: relative;
+     color: white;
+     font-size: 12px;
 }
