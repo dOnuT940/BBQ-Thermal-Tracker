@@ -6,9 +6,7 @@ $(document).ready(function() {
 function loadJSONFile() {
      $.getJSON("arduino.js", function(data, status) {
           if (status === "success" && data) {
-               var errorElem = document.getElementById('error-output');
                console.log("arduino.js load: " + status);
-               errorElem.innerHTML = "success";
                //FAN
                if (data.fan === true) {
                     changeVal("fan", true);
@@ -33,7 +31,7 @@ function loadJSONFile() {
                }
           }
           else {
-               errorElem.innerHTML = "Error loading external JSON: " + status;
+               //errorElem.innerHTML = "Error loading external JSON: " + status;
           }
      });
 }

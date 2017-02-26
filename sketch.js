@@ -10,12 +10,11 @@ var countdown = 10; //Seconds before refresh
 var i = 1; //Fan Rotate Counter
 var timeStampLoad = new Date(); //Time Stamp of Page Load
 
-console.log(timeStampLoad);
 
 function setup() {
      noCanvas(); //REMOVE CANVAS DOM ELEMENT
      showCountdown(); //START REFRESH COUNTDOWN
-
+     setTimeStamp("footertime");
 }
 
 function draw() {
@@ -113,5 +112,7 @@ function returnHome() {
 function setTimeStamp(elemId) {
      //SETS TIMESTAMP OFF PAGE LOAD
      var elem = document.getElementById(elemId);
-     elem.innerHTML = timeStampLoad.toDateString();
+     if (elemId !== undefined || elemId !== null) {
+          elem.innerHTML = "Load Stamp: " + timeStampLoad.toTimeString();
+     }
 }

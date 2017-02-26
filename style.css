@@ -63,7 +63,6 @@ body {
 #footer {
      width: 100%;
      background-color: #202E3C;
-     height: 8%;
      bottom: 0px;
      position: absolute;
 }
@@ -71,6 +70,7 @@ body {
 #ulfoot {
      list-style-type: none;
      font-family: Single;
+     display: inline-block;
 }
 
 #titlefooter {
@@ -79,7 +79,7 @@ body {
      text-decoration: underline;
 }
 
-#footerlinkproject, #footerlinksources {
+#footerlinkproject, #footerlinksources, #footertime {
      font-size: 14px;
      color: #4B77BE;
      text-decoration: none;
@@ -90,12 +90,7 @@ a:hover, a:visited, a:active {
      color: inherit;
 }
 
-#error-output {
-
-}
-
-#timestamp {
-     position: relative;
-     color: white;
-     font-size: 12px;
+.footerli {
+     display: inline-block;
+     padding-right: 20px;
 }
