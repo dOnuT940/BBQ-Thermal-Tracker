@@ -8,17 +8,14 @@ var targetTemp; //Target temperature
 
 var countdown = 10; //Seconds before refresh
 var i = 1; //Fan Rotate Counter
-var timeStampLoad = new Date(); //Time Stamp of Page Load
+var timeStamp = new Date();
 
-
-function setup() {
-     noCanvas(); //REMOVE CANVAS DOM ELEMENT
+window.onload = function() { //WAIT FOR PAGE LOAD
      showCountdown(); //START REFRESH COUNTDOWN
      setTimeStamp("footertime");
-}
-
-function draw() {
-     setTimeout(function() {rotateFan()}, 125);
+     setInterval(function() {loadJSONFile(); console.log("loadjson")}, 10000);
+     setInterval(function() {rotateFan()}, 55.555);
+     setInterval(function() {setTimeStamp("footertime");}, 10000);
 }
 
 function showCountdown() { //REFRESH COUNTDOWN IN HTML
@@ -26,16 +23,18 @@ function showCountdown() { //REFRESH COUNTDOWN IN HTML
      countdown--; //Subtract 1 per
      if (countdown >= 0) {
           setTimeout(showCountdown, 1000);
-          elem.innerHTML = countdown;
+          elem.innerHTML = countdown.toString();
      }
      else {
-          window.location.reload(true); //FORCES RELOAD FROM SERVER
+          countdown = 10;
+          showCountdown();
      }
 }
 
 function rotateFan() { //SPIN FAN ANIMATION IN HTML
      var fan = document.getElementById('fanpic');
-     if (fanStatus === true && i < 19) {
+     if (fanStatus === true && i < 18) {
+          console.log(i);
           var degree = i * 20;
           var value = "rotate(" + degree + "deg)";
           fan.style.transform = value;
@@ -44,6 +43,7 @@ function rotateFan() { //SPIN FAN ANIMATION IN HTML
           return false;
      }
      else if (i >= 19) {
+          fan.style.transform = "rotate(0deg)";
           i = 1;
           return true;
      }
@@ -53,7 +53,6 @@ function rotateFan() { //SPIN FAN ANIMATION IN HTML
 function changeVal(t, v) {
      var strBuild = t + "-value";
      var targetID = document.getElementById(strBuild);
-
      if (t === "power") { //POWER VAL CHANGE
           if (v === true) {
                targetID.style.backgroundColor = "#1BA957";
@@ -112,7 +111,9 @@ function returnHome() {
 function setTimeStamp(elemId) {
      //SETS TIMESTAMP OFF PAGE LOAD
      var elem = document.getElementById(elemId);
+     var time = new Date();
+     timeStamp = time;
      if (elemId !== undefined || elemId !== null) {
-          elem.innerHTML = "Load Stamp: " + timeStampLoad.toTimeString();
+          elem.innerHTML = "Load Stamp: " + timeStamp.toTimeString();
      }
 }

@@ -31,7 +31,7 @@ function loadJSONFile() {
                }
           }
           else {
-               //errorElem.innerHTML = "Error loading external JSON: " + status;
+               errorElem.innerHTML = "Error loading external JSON: " + status;
           }
      });
 }

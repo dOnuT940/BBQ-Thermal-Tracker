@@ -1,6 +1,6 @@
 {
      "power": true,
-     "temp": "160",
+     "temp": "150",
      "fan": true,
      "target": "220"
 }
