@@ -1,33 +1,28 @@
-//GREEN Connection HEX #1BA957
-//RED Connection HEX #C3272B
-
 var power; //Arduino Power Status Boolean
 var temp; //temperature reading
 var fanStatus; //Fan Status Boolean
 var targetTemp; //Target temperature
-
 var countdown = 10; //Seconds before refresh
 var i = 1; //Fan Rotate Counter
 var timeStamp = new Date();
 
 window.onload = function() { //WAIT FOR PAGE LOAD
      showCountdown(); //START REFRESH COUNTDOWN
-     setTimeStamp("footertime"); //INITIAL TIME STAMP
      loadJSONFile(); //INITIAL JSON REQUEST
      setInterval(function() {loadJSONFile();}, 10000);
      setInterval(function() {rotateFan();}, 55.555);
-     setInterval(function() {setTimeStamp("footertime");}, 10000);
 }
 
 function showCountdown() { //REFRESH COUNTDOWN IN HTML
      var elem = document.getElementById('refresh-value');
      countdown--; //Subtract 1 per
      if (countdown >= 0) {
-          setTimeout(showCountdown, 1000);
+          var countdownLoop = setTimeout(showCountdown, 1000);
           elem.innerHTML = countdown.toString();
      }
      else {
-          countdown = 10;
+          countdown = 10; //RESET LOOP COUNTER
+          window.clearTimeout(countdownLoop);
           showCountdown();
      }
 }

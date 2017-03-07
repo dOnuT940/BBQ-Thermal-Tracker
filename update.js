@@ -2,8 +2,8 @@ $(document).ready(function() {
      $.ajaxSetup({cache: false}); //Prevents getJSON request get from cache
 });
 
-
 function loadJSONFile() {
+     setTimeStamp("footertime"); //SET TIMESTAMP OF JSON LOAD
      var req = $.getJSON("/arduino.js", function(data, status) {
           if (status === "success" && data) {
                //FAN
