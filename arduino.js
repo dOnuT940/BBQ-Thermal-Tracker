@@ -1,6 +1,4 @@
-{
-     "power": true,
-     "temp": "150",
-     "fan": true,
-     "target": "220"
-}
+{"power": true,
+"temp": "200",
+"fan": true,
+"target": "220"}

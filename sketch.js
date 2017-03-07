@@ -12,9 +12,10 @@ var timeStamp = new Date();
 
 window.onload = function() { //WAIT FOR PAGE LOAD
      showCountdown(); //START REFRESH COUNTDOWN
-     setTimeStamp("footertime");
-     setInterval(function() {loadJSONFile(); console.log("loadjson")}, 10000);
-     setInterval(function() {rotateFan()}, 55.555);
+     setTimeStamp("footertime"); //INITIAL TIME STAMP
+     loadJSONFile(); //INITIAL JSON REQUEST
+     setInterval(function() {loadJSONFile();}, 10000);
+     setInterval(function() {rotateFan();}, 55.555);
      setInterval(function() {setTimeStamp("footertime");}, 10000);
 }
 
@@ -34,7 +35,6 @@ function showCountdown() { //REFRESH COUNTDOWN IN HTML
 function rotateFan() { //SPIN FAN ANIMATION IN HTML
      var fan = document.getElementById('fanpic');
      if (fanStatus === true && i < 18) {
-          console.log(i);
           var degree = i * 20;
           var value = "rotate(" + degree + "deg)";
           fan.style.transform = value;
@@ -113,7 +113,7 @@ function setTimeStamp(elemId) {
      var elem = document.getElementById(elemId);
      var time = new Date();
      timeStamp = time;
-     if (elemId !== undefined || elemId !== null) {
+     if (elemId) {
           elem.innerHTML = "Load Stamp: " + timeStamp.toTimeString();
      }
 }

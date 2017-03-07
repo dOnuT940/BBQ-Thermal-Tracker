@@ -1,12 +1,11 @@
 $(document).ready(function() {
-     loadJSONFile();
+     $.ajaxSetup({cache: false}); //Prevents getJSON request get from cache
 });
 
 
 function loadJSONFile() {
-     $.getJSON("arduino.js", function(data, status) {
+     var req = $.getJSON("/arduino.js", function(data, status) {
           if (status === "success" && data) {
-               console.log("arduino.js load: " + status);
                //FAN
                if (data.fan === true) {
                     changeVal("fan", true);
@@ -31,7 +30,7 @@ function loadJSONFile() {
                }
           }
           else {
-               errorElem.innerHTML = "Error loading external JSON: " + status;
+               console.error("Error loading JSON: " + status);
           }
      });
 }
