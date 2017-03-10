@@ -8,9 +8,9 @@ var timeStamp = new Date();
 
 window.onload = function() { //WAIT FOR PAGE LOAD
      showCountdown(); //START REFRESH COUNTDOWN
-     loadJSONFile(); //INITIAL JSON REQUEST
-     setInterval(function() {loadJSONFile();}, 10000);
-     setInterval(function() {rotateFan();}, 55.555);
+     //loadJSONFile(); //INITIAL JSON REQUEST
+     var loadJSONLoop = setInterval(function() {loadJSONFile();}, 10000);
+     var fanLoop = setInterval(function() {rotateFan();}, 55.555);
 }
 
 function showCountdown() { //REFRESH COUNTDOWN IN HTML
@@ -29,7 +29,7 @@ function showCountdown() { //REFRESH COUNTDOWN IN HTML
 
 function rotateFan() { //SPIN FAN ANIMATION IN HTML
      var fan = document.getElementById('fanpic');
-     if (fanStatus === true && i < 18) {
+     if (fanStatus === true && i < 19) {
           var degree = i * 20;
           var value = "rotate(" + degree + "deg)";
           fan.style.transform = value;
@@ -37,8 +37,7 @@ function rotateFan() { //SPIN FAN ANIMATION IN HTML
      else if (fanStatus === false) {
           return false;
      }
-     else if (i >= 19) {
-          fan.style.transform = "rotate(0deg)";
+     else if (i >= 20) {
           i = 1;
           return true;
      }
@@ -73,6 +72,7 @@ function changeVal(t, v) {
      }
      else if (t === "temp" && !(isNaN(v)) && v >= 0) { //TEMP VAL CHANGE
           targetID.innerHTML = v;
+          document.getElementById("temp-value").style.color = "#4B77BE";
           temp = v;
      }
      else if (t === "fan") { //FAN VAL CHANGE
@@ -92,6 +92,7 @@ function changeVal(t, v) {
      }
      else if (t === "target"  && !(isNaN(v)) && v >= 0) {
           targetID.innerHTML = v;
+          document.getElementById("target-value").style.color = "#4B77BE";
           targetTemp = v;
      }
      else {

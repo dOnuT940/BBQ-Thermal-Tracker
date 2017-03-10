@@ -94,3 +94,7 @@ a:hover, a:visited, a:active {
      display: inline-block;
      padding-right: 20px;
 }
+
+.page:hover {
+     cursor: default;
+}
