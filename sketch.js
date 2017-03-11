@@ -5,12 +5,15 @@ var targetTemp; //Target temperature
 var countdown = 10; //Seconds before refresh
 var i = 1; //Fan Rotate Counter
 var timeStamp = new Date();
+var tempReads = [];
+var graphStatus = false; //Graph Status boolean
 
 window.onload = function() { //WAIT FOR PAGE LOAD
      showCountdown(); //START REFRESH COUNTDOWN
-     //loadJSONFile(); //INITIAL JSON REQUEST
+     loadJSONFile(); //INITIAL JSON REQUEST
      var loadJSONLoop = setInterval(function() {loadJSONFile();}, 10000);
      var fanLoop = setInterval(function() {rotateFan();}, 55.555);
+     document.getElementById("svg").style.visibility = false;
 }
 
 function showCountdown() { //REFRESH COUNTDOWN IN HTML
@@ -22,7 +25,7 @@ function showCountdown() { //REFRESH COUNTDOWN IN HTML
      }
      else {
           countdown = 10; //RESET LOOP COUNTER
-          window.clearTimeout(countdownLoop);
+          window.clearTimeout(countdownLoop); //RESET COUNTDOWN LOOP
           showCountdown();
      }
 }
@@ -71,6 +74,13 @@ function changeVal(t, v) {
           }
      }
      else if (t === "temp" && !(isNaN(v)) && v >= 0) { //TEMP VAL CHANGE
+          if (tempReads.length <= 39) {
+               tempReads.push(parseInt(v));
+          }
+          else if (tempReads.length = 40) {
+               tempReads.splice(0, 1); //Remove element [0] if array full
+          }
+
           targetID.innerHTML = v;
           document.getElementById("temp-value").style.color = "#4B77BE";
           temp = v;
@@ -106,10 +116,45 @@ function returnHome() {
 
 function setTimeStamp(elemId) {
      //SETS TIMESTAMP OFF PAGE LOAD
-     var elem = document.getElementById(elemId);
-     var time = new Date();
-     timeStamp = time;
      if (elemId) {
+          var elem = document.getElementById(elemId);
+          var time = new Date();
+          timeStamp = time;
           elem.innerHTML = "Load Stamp: " + timeStamp.toTimeString();
+     }
+}
+
+function showGraph() {
+     document.getElementById("svg").hidden = false;
+     var e = document.getElementById("graph-wrapper");
+     var gWidth = document.getElementById("page-title").offsetWidth;
+     var gHeight = gWidth / 4.8; //Make graph like page-title size;
+     var spaceW = gWidth / 40 //40 Reads possible
+     var spaceH = gHeight / parseInt(targetTemp); //x Degress Possible possbe
+     var max = targetTemp;
+     var min = 0;
+     var pl = document.getElementById("poly");
+     var points = new Array;
+
+     if (graphStatus === false) {
+          graphStatus = true;
+          e.style.height = gHeight; //Setup of svg
+          e.style.width = gWidth;
+          e.style.borderRadius = "10px";
+          e.style.border = "6px solid #273E60";
+          for (i=0; i<tempReads.length; i++) {
+               var x = spaceW * i;
+               var y = spaceH * tempReads[i];
+               points.push(x, y);
+          }
+          pl.setAttribute('points', points);
+     }
+     else {
+          for (i=0; i<tempReads.length; i++) {
+               var x = spaceW * i;
+               var y = spaceH * tempReads[i];
+               points.push(x, y);
+          }
+          pl.setAttribute('points', points);
      }
 }

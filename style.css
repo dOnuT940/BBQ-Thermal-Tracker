@@ -98,3 +98,18 @@ a:hover, a:visited, a:active {
 .page:hover {
      cursor: default;
 }
+
+#graph-wrapper {
+     margin: 0 auto;
+     background-color: #4268A0;
+}
+
+#svg {
+     position: fixed;
+     z-index: 15;
+     cursor: pointer;
+}
+
+#poly {
+
+}

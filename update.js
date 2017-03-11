@@ -7,12 +7,21 @@ $(document).ready(function() {
           $(this).css({'color': '#5382C8', 'cursor': 'pointer'});
      })
      $("#temp-value").click(function() {
-          
+          showGraph();
+     })
+     $("#svg").hover(function() {
+          //       get x val and show val                                3/10/2017
+     }, function() {
+
      })
 });
 
 function loadJSONFile() {
      setTimeStamp("footertime"); //SET TIMESTAMP OF JSON LOAD
+     if (graphStatus === true) {
+          console.log("graphstatus");
+          showGraph();
+     }
      var req = $.getJSON("arduino.js", function(data, status) {
           if (status === "success" && data) {
                //FAN
@@ -23,7 +32,7 @@ function loadJSONFile() {
                     changeVal("fan", false);
                }
                //TEMP
-               if (data.temp !== temp) {
+               if (data.temp) {
                     changeVal("temp", data.temp);
                }
                //TARGET TEMP
