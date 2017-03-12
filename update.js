@@ -10,16 +10,17 @@ $(document).ready(function() {
           showGraph();
      })
      $("#svg").hover(function() {
-          //       get x val and show val                                3/10/2017
+          $("#poly").css('stroke', '14');    //NOT WORKING      ------------------------------------
+          console.log("svg hover in");
      }, function() {
-
+          $("#poly").css('stroke', '2');
+          console.log("svg hover out");
      })
 });
 
 function loadJSONFile() {
      setTimeStamp("footertime"); //SET TIMESTAMP OF JSON LOAD
      if (graphStatus === true) {
-          console.log("graphstatus");
           showGraph();
      }
      var req = $.getJSON("arduino.js", function(data, status) {

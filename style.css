@@ -101,15 +101,16 @@ a:hover, a:visited, a:active {
 
 #graph-wrapper {
      margin: 0 auto;
-     background-color: #4268A0;
+     background-color: #293a4b;
+     border-radius: 10px;
+     border: 4px solid #202E3C;
 }
 
 #svg {
-     position: fixed;
-     z-index: 15;
      cursor: pointer;
+     margin: 0 auto;
 }
 
-#poly {
-
+svg use {
+  pointer-events: none;
 }

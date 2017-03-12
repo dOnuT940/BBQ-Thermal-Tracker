@@ -13,7 +13,7 @@ window.onload = function() { //WAIT FOR PAGE LOAD
      loadJSONFile(); //INITIAL JSON REQUEST
      var loadJSONLoop = setInterval(function() {loadJSONFile();}, 10000);
      var fanLoop = setInterval(function() {rotateFan();}, 55.555);
-     document.getElementById("svg").style.visibility = false;
+     hideGraph(); //Hide SVG and Graph-Wrapper elements
 }
 
 function showCountdown() { //REFRESH COUNTDOWN IN HTML
@@ -78,7 +78,7 @@ function changeVal(t, v) {
                tempReads.push(parseInt(v));
           }
           else if (tempReads.length = 40) {
-               tempReads.splice(0, 1); //Remove element [0] if array full
+               tempReads.splice(0, 0); //Remove element [0] if array full
           }
 
           targetID.innerHTML = v;
@@ -125,14 +125,16 @@ function setTimeStamp(elemId) {
 }
 
 function showGraph() {
-     document.getElementById("svg").hidden = false;
+     document.getElementById("svg").hidden = false; //SHOW ELEMENTS
+     document.getElementById("graph-wrapper").hidden = false;
+
+     var targ = parseInt(targetTemp, 10);
      var e = document.getElementById("graph-wrapper");
-     var gWidth = document.getElementById("page-title").offsetWidth;
-     var gHeight = gWidth / 4.8; //Make graph like page-title size;
-     var spaceW = gWidth / 40 //40 Reads possible
-     var spaceH = gHeight / parseInt(targetTemp); //x Degress Possible possbe
-     var max = targetTemp;
-     var min = 0;
+     var gWidth = document.getElementById("page-title").offsetWidth - 20;
+     var gHeight = gWidth / 4.8; //Make graph like page-title size
+     var spaceW = gWidth / 40; //40 Reads possible
+     var max = targ * 1.2; //Allow 120% overhead temp
+     var spaceH = parseInt(gHeight, 10) / max; //x Degress Possible possible
      var pl = document.getElementById("poly");
      var points = new Array;
 
@@ -140,11 +142,9 @@ function showGraph() {
           graphStatus = true;
           e.style.height = gHeight; //Setup of svg
           e.style.width = gWidth;
-          e.style.borderRadius = "10px";
-          e.style.border = "6px solid #273E60";
           for (i=0; i<tempReads.length; i++) {
-               var x = spaceW * i;
-               var y = spaceH * tempReads[i];
+               var x = spaceW * i; //Read number for position
+               var y = gHeight - (spaceH * tempReads[i]); //INVERT FOR Proper Y Axis
                points.push(x, y);
           }
           pl.setAttribute('points', points);
@@ -152,9 +152,14 @@ function showGraph() {
      else {
           for (i=0; i<tempReads.length; i++) {
                var x = spaceW * i;
-               var y = spaceH * tempReads[i];
+               var y = gHeight - (spaceH * tempReads[i]);
                points.push(x, y);
           }
           pl.setAttribute('points', points);
      }
+}
+
+function hideGraph() {
+     document.getElementById("svg").hidden = true;
+     document.getElementById("graph-wrapper").hidden = true;
 }
