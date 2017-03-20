@@ -108,7 +108,9 @@ a:hover, a:visited, a:active {
 
 #svg {
      cursor: pointer;
-     margin: 0 auto;
+     margin-left: auto;
+     margin-right: auto;
+     display: block;
 }
 
 svg use {

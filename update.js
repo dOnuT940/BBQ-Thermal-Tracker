@@ -6,15 +6,26 @@ $(document).ready(function() {
      }, function() {
           $(this).css({'color': '#5382C8', 'cursor': 'pointer'});
      })
-     $("#temp-value").click(function() {
+     $("#temp-value").click(function(e) {
           showGraph();
      })
-     $("#svg").hover(function() {
-          $("#poly").css('stroke', '14');    //NOT WORKING      ------------------------------------
-          console.log("svg hover in");
-     }, function() {
-          $("#poly").css('stroke', '2');
-          console.log("svg hover out");
+     $("#svg").hover(function(eve) {
+          $("#poly").css('strokeWidth', '2.75px');
+          if (mouseGraph === false) {
+               mouseGraph = true;
+               trackXGraph(eve);
+               $("#x-line").show();
+          }
+     }, function(eve) {
+          $("#poly").css('strokeWidth', '2px');
+          mouseGraph = false;
+          trackXGraph(eve);
+          $("#x-line").hide();
+     })
+     $("#svg").on('mousemove', function(event) {
+          if (mouseGraph === true) {
+               trackXGraph(event);
+          }
      })
 });
 

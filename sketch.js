@@ -1,17 +1,19 @@
+const refreshTime = 3; //SECONDS ONLY
 var power; //Arduino Power Status Boolean
 var temp; //temperature reading
 var fanStatus; //Fan Status Boolean
 var targetTemp; //Target temperature
-var countdown = 10; //Seconds before refresh
+var countdown = refreshTime; //Seconds before refresh
 var i = 1; //Fan Rotate Counter
 var timeStamp = new Date();
 var tempReads = [];
 var graphStatus = false; //Graph Status boolean
+var mouseGraph = false; //Mouse in/out of svg
 
 window.onload = function() { //WAIT FOR PAGE LOAD
      showCountdown(); //START REFRESH COUNTDOWN
      loadJSONFile(); //INITIAL JSON REQUEST
-     var loadJSONLoop = setInterval(function() {loadJSONFile();}, 10000);
+     var loadJSONLoop = setInterval(function() {loadJSONFile();}, refreshTime * 1000);
      var fanLoop = setInterval(function() {rotateFan();}, 55.555);
      hideGraph(); //Hide SVG and Graph-Wrapper elements
 }
@@ -24,7 +26,7 @@ function showCountdown() { //REFRESH COUNTDOWN IN HTML
           elem.innerHTML = countdown.toString();
      }
      else {
-          countdown = 10; //RESET LOOP COUNTER
+          countdown = refreshTime; //RESET LOOP COUNTER
           window.clearTimeout(countdownLoop); //RESET COUNTDOWN LOOP
           showCountdown();
      }
@@ -122,6 +124,9 @@ function setTimeStamp(elemId) {
           timeStamp = time;
           elem.innerHTML = "Load Stamp: " + timeStamp.toTimeString();
      }
+     else {
+          return false;
+     }
 }
 
 function showGraph() {
@@ -129,37 +134,59 @@ function showGraph() {
      document.getElementById("graph-wrapper").hidden = false;
 
      var targ = parseInt(targetTemp, 10);
-     var e = document.getElementById("graph-wrapper");
-     var gWidth = document.getElementById("page-title").offsetWidth - 20;
+     var e = document.getElementById("svg");
+     var gw = document.getElementById("graph-wrapper");
+     var pl = document.getElementById("poly");
+     var wTitle = document.getElementById("page-title").offsetWidth;
+     var gWidth = wTitle - 20;
      var gHeight = gWidth / 4.8; //Make graph like page-title size
      var spaceW = gWidth / 40; //40 Reads possible
-     var max = targ * 1.2; //Allow 120% overhead temp
+     var max = targ * 1.2; //Allow 120% for overhead temp
      var spaceH = parseInt(gHeight, 10) / max; //x Degress Possible possible
-     var pl = document.getElementById("poly");
      var points = new Array;
 
      if (graphStatus === false) {
           graphStatus = true;
+          gw.style.height = gHeight;
+          gw.style.width = gWidth;
+          gw.style.textAlign = "center";
+
           e.style.height = gHeight; //Setup of svg
           e.style.width = gWidth;
-          for (i=0; i<tempReads.length; i++) {
-               var x = spaceW * i; //Read number for position
-               var y = gHeight - (spaceH * tempReads[i]); //INVERT FOR Proper Y Axis
-               points.push(x, y);
-          }
-          pl.setAttribute('points', points);
      }
-     else {
-          for (i=0; i<tempReads.length; i++) {
-               var x = spaceW * i;
-               var y = gHeight - (spaceH * tempReads[i]);
-               points.push(x, y);
-          }
-          pl.setAttribute('points', points);
+
+     for (i=0; i<tempReads.length; i++) { //Loop through all temps and push coords into polyline elem
+          var x = spaceW * i;
+          var y = gHeight - (spaceH * tempReads[i]);
+          points.push(x, y);
      }
+     pl.setAttribute('points', points);
 }
 
 function hideGraph() {
      document.getElementById("svg").hidden = true;
      document.getElementById("graph-wrapper").hidden = true;
+}
+
+function trackXGraph(event) {
+     var xLine = document.getElementById("x-line");
+     var l; //Timeout variable
+     var heightGW = document.getElementById("graph-wrapper").offsetHeight;
+     var point = new Array;
+     var topLeft = document.getElementById("graph-wrapper").getBoundingClientRect().left;
+
+     if (mouseGraph === true) {
+          l = window.setTimeout(function() {
+               var mX = (event.clientX) - topLeft;
+               point.push(mX, 0);
+               point.push(mX, heightGW);
+               xLine.setAttribute('x1', mX);
+               xLine.setAttribute('y1', 0);
+               xLine.setAttribute('x2', mX);
+               xLine.setAttribute('y2', heightGW);
+          }, 60);
+     }
+     else {
+          return false;
+     }
 }

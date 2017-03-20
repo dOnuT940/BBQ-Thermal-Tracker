@@ -1,0 +1,19 @@
+{
+  "name": "bbq-thermal-tracker",
+  "version": "1.0.0",
+  "description": "Arduino and Web Communication",
+  "main": "arduino.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dOnuT940/BBQ-Thermal-Tracker.git"
+  },
+  "author": "dOnuT940",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dOnuT940/BBQ-Thermal-Tracker/issues"
+  },
+  "homepage": "https://github.com/dOnuT940/BBQ-Thermal-Tracker#readme"
+}
